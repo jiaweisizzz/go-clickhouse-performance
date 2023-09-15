@@ -23,14 +23,14 @@ import (
 
 var (
 	host, user, pass, db, tb, debug *string
-	batch                    *int
+	batch                           *int
 )
 
-func main()  {
-	host = flag.String("host", "10.5.30.249:9000", "clickhouse host")
-	user = flag.String("user", "pangu", "clichouse user")
-	pass = flag.String("password", "pangu.CK@2021", "clickhouse password")
-	db = flag.String("db", "pangu", "clickhouse database")
+func main() {
+	host = flag.String("host", "localhost:9000", "clickhouse host")
+	user = flag.String("user", "test", "clichouse user")
+	pass = flag.String("password", "test", "clickhouse password")
+	db = flag.String("db", "test", "clickhouse database")
 	batch = flag.Int("batch", 100000, "clickhouse batch")
 	tb = flag.String("tb", "event", "clickhouse table")
 	debug = flag.String("debug", "false", "clickhouse debug")

@@ -27,10 +27,10 @@ var (
 )
 
 func main() {
-	host = flag.String("host", "10.5.30.249:9000", "clickhouse host")
-	user = flag.String("user", "pangu", "clichouse user")
-	pass = flag.String("password", "pangu.CK@2021", "clickhouse password")
-	db = flag.String("db", "pangu", "clickhouse database")
+	host = flag.String("host", "localhost:9000", "clickhouse host")
+	user = flag.String("user", "test", "clichouse user")
+	pass = flag.String("password", "test", "clickhouse password")
+	db = flag.String("db", "test", "clickhouse database")
 	batch = flag.Int("batch", 100000, "clickhouse batch")
 	tb = flag.String("tb", "event", "clickhouse table")
 	flag.Parse()
@@ -83,4 +83,3 @@ func insert(conn *sqlx.DB, batch int) {
 	end := time.Now().UnixNano()
 	fmt.Printf("记录数: %d, 耗时: %d, 循环准备耗时: %d, 速率: %d(条/秒) \n", batch, (end-start)/1e6, (e-s)/1e6, int64(batch*1000000*1000)/(end-start))
 }
-

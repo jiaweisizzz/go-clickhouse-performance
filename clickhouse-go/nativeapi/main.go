@@ -14,7 +14,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/ClickHouse/clickhouse-go/v2"
-	 "github.com/ClickHouse/clickhouse-go/v2/lib/driver"
+	"github.com/ClickHouse/clickhouse-go/v2/lib/driver"
 	"log"
 	"os"
 	"os/signal"
@@ -24,18 +24,18 @@ import (
 
 var (
 	host, user, pass, db, tb *string
-	batch, g                    *int
+	batch, g                 *int
 	debug                    *bool
 )
 
 func main() {
-	host = flag.String("host", "10.5.30.249:9000", "clickhouse host")
-	user = flag.String("user", "pangu", "clichouse user")
-	pass = flag.String("password", "pangu.CK@2021", "clickhouse password")
-	db = flag.String("db", "pangu", "clickhouse database")
+	host = flag.String("host", "localhost:9000", "clickhouse host")
+	user = flag.String("user", "test", "clichouse user")
+	pass = flag.String("password", "test", "clickhouse password")
+	db = flag.String("db", "test", "clickhouse database")
 	g = flag.Int("g", 1, "write goroutine")
 	batch = flag.Int("batch", 100000, "clickhouse batch")
-	tb = flag.String("tb", "event20230316", "clickhouse table")
+	tb = flag.String("tb", "event", "clickhouse table")
 	debug = flag.Bool("debug", false, "clickhouse debug")
 	flag.Parse()
 	fmt.Printf("clickhouse host: %s \nclichouse user: %s \nclickhouse password: %s \nclickhouse database: %s \nclickhouse batch: %d \nclickhouse table: %s \n",
@@ -61,7 +61,7 @@ func main() {
 	if err := conn.Ping(context.Background()); err != nil {
 		panic(any(err))
 	}
-	for i:=0; i<*g; i++ {
+	for i := 0; i < *g; i++ {
 		go func() {
 			for {
 				insert(conn, *batch)
@@ -90,7 +90,7 @@ func insert(conn driver.Conn, batch int) {
 			data.InsertData.Iappprotocol, data.InsertData.Icollecttype, data.InsertData.Idstport, data.InsertData.Ieventlevel, data.InsertData.Imergecount,
 			data.InsertData.Iprotocol, data.InsertData.Isrcport, data.InsertData.Lduration, data.InsertData.Lrecivepack, data.InsertData.Lsendpack,
 			data.InsertData.RequestBodyLen, data.InsertData.ResponseBodyLen, data.InsertData.Lendtime, data.InsertData.Lid, time.Now().UnixNano()/1e6,
-			time.Now().UnixNano()/1e6, data.InsertData.Lstartime,time.Now().Format("2006-01-02 15:04:05"))
+			time.Now().UnixNano()/1e6, data.InsertData.Lstartime, time.Now().Format("2006-01-02 15:04:05"))
 		if err != nil {
 			log.Fatal(err)
 		}
